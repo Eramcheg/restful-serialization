@@ -6,8 +6,8 @@ import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
 import com.softserve.itacademy.service.UserService;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+//import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,7 +32,7 @@ public class ToDoController {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #ownerId==authentication.principal.id")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or #ownerId==authentication.principal.id")
     @GetMapping("/create/users/{owner_id}")
     public String create(@PathVariable("owner_id") long ownerId, Model model) {
         model.addAttribute("todo", new ToDo());
@@ -40,7 +40,7 @@ public class ToDoController {
         return "create-todo";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #ownerId==authentication.principal.id")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or #ownerId==authentication.principal.id")
     @PostMapping("/create/users/{owner_id}")
     public String create(@PathVariable("owner_id") long ownerId, @Validated @ModelAttribute("todo") ToDo todo, BindingResult result) {
         if (result.hasErrors()) {
@@ -52,28 +52,43 @@ public class ToDoController {
         return "redirect:/todos/all/users/" + ownerId;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or " +
-            "authentication.principal.id==@toDoServiceImpl.readById(#id).owner.id or " +
-            "@toDoServiceImpl.readById(#id).collaborators" +
-            ".contains(@userServiceImpl.readById(authentication.principal.id))")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or " +
+//            "authentication.principal.id==@toDoServiceImpl.readById(#id).owner.id or " +
+//            "@toDoServiceImpl.readById(#id).collaborators" +
+//            ".contains(@userServiceImpl.readById(authentication.principal.id))")
+//    @GetMapping("/{id}/tasks")
+//    public String read(@PathVariable long id, Model model, Authentication authentication) {
+//        ToDo todo = todoService.readById(id);
+//        List<Task> tasks = taskService.getByTodoId(id);
+//        List<User> users = userService.getAll().stream()
+//                .filter(user -> user.getId() != todo.getOwner().getId()).collect(Collectors.toList());
+//        User user = userService.getAll().stream().filter(u -> u.getUsername().equals(authentication.getName())).findFirst().orElse(null);
+//        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"));
+//        model.addAttribute("todo", todo);
+//        model.addAttribute("tasks", tasks);
+//        model.addAttribute("users", users);
+//        model.addAttribute("owner", todo.getOwner().equals(user));
+//        model.addAttribute("isAdmin", isAdmin);
+//        return "todo-tasks";
+//    }
+
     @GetMapping("/{id}/tasks")
-    public String read(@PathVariable long id, Model model, Authentication authentication) {
+    public String read(@PathVariable long id, Model model) {
         ToDo todo = todoService.readById(id);
         List<Task> tasks = taskService.getByTodoId(id);
         List<User> users = userService.getAll().stream()
                 .filter(user -> user.getId() != todo.getOwner().getId()).collect(Collectors.toList());
-        User user = userService.getAll().stream().filter(u -> u.getUsername().equals(authentication.getName())).findFirst().orElse(null);
-        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"));
+//        User user = userService.getAll().stream().filter(u -> u.getUsername().equals(authentication.getName())).findFirst().orElse(null);
+//        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"));
         model.addAttribute("todo", todo);
         model.addAttribute("tasks", tasks);
         model.addAttribute("users", users);
-        model.addAttribute("owner", todo.getOwner().equals(user));
-        model.addAttribute("isAdmin", isAdmin);
+//        model.addAttribute("owner", todo.getOwner().equals(user));
+//        model.addAttribute("isAdmin", isAdmin);
         return "todo-tasks";
     }
 
-
-    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #ownerId")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #ownerId")
     @GetMapping("/{todo_id}/update/users/{owner_id}")
     public String update(@PathVariable("todo_id") long todoId, @PathVariable("owner_id") long ownerId, Model model) {
         ToDo todo = todoService.readById(todoId);
@@ -82,7 +97,7 @@ public class ToDoController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #ownerId")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #ownerId")
     @PostMapping("/{todo_id}/update/users/{owner_id}")
     public String update(@PathVariable("todo_id") long todoId, @PathVariable("owner_id") long ownerId,
                          @Validated @ModelAttribute("todo") ToDo todo, BindingResult result) {
@@ -97,21 +112,29 @@ public class ToDoController {
         return "redirect:/todos/all/users/" + ownerId;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #ownerId")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #ownerId")
     @GetMapping("/{todo_id}/delete/users/{owner_id}")
     public String delete(@PathVariable("todo_id") long todoId, @PathVariable("owner_id") long ownerId) {
         todoService.delete(todoId);
         return "redirect:/todos/all/users/" + ownerId;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #userId==authentication.principal.id")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or #userId==authentication.principal.id")
+//    @GetMapping("/all/users/{user_id}")
+//    public String getAll(@PathVariable("user_id") long userId, Authentication authentication, Model model) {
+//        List<ToDo> todos = todoService.getByUserId(userId);
+//        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"));
+//        model.addAttribute("todos", todos);
+//        model.addAttribute("user", userService.readById(userId));
+//        model.addAttribute("isAdmin", isAdmin);
+//        return "todos-user";
+//    }
+
     @GetMapping("/all/users/{user_id}")
-    public String getAll(@PathVariable("user_id") long userId, Authentication authentication, Model model) {
+    public String getAll(@PathVariable("user_id") long userId, Model model) {
         List<ToDo> todos = todoService.getByUserId(userId);
-        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"));
         model.addAttribute("todos", todos);
         model.addAttribute("user", userService.readById(userId));
-        model.addAttribute("isAdmin", isAdmin);
         return "todos-user";
     }
 

@@ -43,9 +43,9 @@
         </tr>
     </table>
 
-    <div th:switch="${owner || isAdmin}">
+<!--    <div th:switch="${owner || isAdmin}">-->
         <br>
-        <div th:case="true">
+<!--        <div th:case="true">-->
 
         <span>
             <form class="form-horizontal" th:action="@{/todos/{id}/add(id = ${todo.id})}" method="get">
@@ -58,11 +58,11 @@
             </form>
         </span>
         <br>
-    </div>
-    <div th:case="false">
-        <br>
-    </div>
-    </div>
+<!--    </div>-->
+<!--    <div th:case="false">-->
+<!--        <br>-->
+<!--    </div>-->
+<!--    </div>-->
     <h3>Collaborators:</h3>
     <table class="table">
         <tr th:each="collaborator, iStat: ${todo.collaborators}">
@@ -73,7 +73,8 @@
             </td>
 
             <td>
-                <a th:href="@{/todos/{id}/remove(id = ${todo.id}, user_id = ${collaborator.id})}" th:if="${owner || isAdmin}">Remove</a>
+<!--                <a th:href="@{/todos/{id}/remove(id = ${todo.id}, user_id = ${collaborator.id})}" th:if="${owner || isAdmin}">Remove</a>-->
+                <a th:href="@{/todos/{id}/remove(id = ${todo.id}, user_id = ${collaborator.id})}">Remove</a>
             </td>
         </tr>
     </table>
@@ -81,7 +82,7 @@
     <span>
         <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to ToDo Lists</a>
     </span>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+<!--    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
 </div>
 </body>
 </html>

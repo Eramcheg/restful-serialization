@@ -61,7 +61,8 @@
                         <span th:each="role : ${roles}">
                             <option th:if="${role.id == user.role.id}" th:selected="${true}" th:text="${role.name.substring(0, 1) + role.name.substring(1).toLowerCase()}"
                                     th:value="${role.id}"/>
-                            <option sec:authorize="hasRole('ROLE_ADMIN')" th:text="${role.name.substring(0, 1) + role.name.substring(1).toLowerCase()}" th:unless="${role.id == user.role.id}"
+<!--                            <option sec:authorize="hasRole('ROLE_ADMIN')" th:text="${role.name.substring(0, 1) + role.name.substring(1).toLowerCase()}" th:unless="${role.id == user.role.id}"-->
+                            <option th:text="${role.name.substring(0, 1) + role.name.substring(1).toLowerCase()}" th:unless="${role.id == user.role.id}"
                                     th:value="${role.id}"/>
                         </span>
                 </select>
@@ -72,7 +73,7 @@
             <input class="btn btn" type="reset" value="Clear"/>
             <input name="id" th:value="*{id}" type="hidden"/>
         </div>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+<!--        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
     </form>
 </div>
 

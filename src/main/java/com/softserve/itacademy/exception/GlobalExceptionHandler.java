@@ -2,9 +2,9 @@ package com.softserve.itacademy.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.access.AccessDeniedException;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,21 +29,21 @@ public class GlobalExceptionHandler {
     public ModelAndView entityNotFoundExceptionHandler(HttpServletRequest request, EntityNotFoundException exception) {
         return getModelAndView(request, HttpStatus.NOT_FOUND, exception);
     }
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(value= HttpStatus.FORBIDDEN)
-    public ModelAndView accessDeniedExeptionHandler(HttpServletRequest request, Exception exception) {
-        Authentication auth
-                = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            logger.warn("User: " + auth.getName()
-                    + " attempted to access the protected URL: "
-                    + request.getRequestURI());
-        }
-        ModelAndView modelAndView = new ModelAndView("access-denied-error");
-        modelAndView.addObject("url", request.getRequestURL());
-        modelAndView.addObject("message", exception.getMessage());
-        return modelAndView;
-    }
+//    @ExceptionHandler(AccessDeniedException.class)
+//    @ResponseStatus(value= HttpStatus.FORBIDDEN)
+//    public ModelAndView accessDeniedExeptionHandler(HttpServletRequest request, Exception exception) {
+//        Authentication auth
+//                = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth != null) {
+//            logger.warn("User: " + auth.getName()
+//                    + " attempted to access the protected URL: "
+//                    + request.getRequestURI());
+//        }
+//        ModelAndView modelAndView = new ModelAndView("access-denied-error");
+//        modelAndView.addObject("url", request.getRequestURL());
+//        modelAndView.addObject("message", exception.getMessage());
+//        return modelAndView;
+//    }
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView internalServerErrorHandler(HttpServletRequest request, Exception exception) {

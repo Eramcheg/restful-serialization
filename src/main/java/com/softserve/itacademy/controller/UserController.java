@@ -3,9 +3,9 @@ package com.softserve.itacademy.controller;
 import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.service.RoleService;
 import com.softserve.itacademy.service.UserService;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.access.annotation.Secured;
+//import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,7 +46,7 @@ public class UserController {
         return "redirect:/todos/all/users/" + newUser.getId();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
     @GetMapping("/{id}/read")
     public String read(@PathVariable long id, Model model) {
         User user = userService.readById(id);
@@ -54,7 +54,7 @@ public class UserController {
         return "user-info";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
     @GetMapping("/{id}/update")
     public String update(@PathVariable long id, Model model) {
         User user = userService.readById(id);
@@ -64,7 +64,7 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
     @PostMapping("/{id}/update")
     public String update(@PathVariable long id, Model model, @Validated @ModelAttribute("user") User user, @RequestParam("roleId") long roleId, BindingResult result) {
         User oldUser = userService.readById(id);
@@ -90,19 +90,18 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
+//    @PreAuthorize("hasRole('ROLE_ADMIN') or authentication.principal.id == #id")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") long id) {
         userService.delete(id);
-        if (SecurityContextHolder.getContext().getAuthentication()
-                .getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+//        if (SecurityContextHolder.getContext().getAuthentication()
+//                .getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/users/all";
-        }
-        return "redirect:/login";
+//        }
+//        return "redirect:/login";
     }
 
-
-    @Secured("ROLE_ADMIN")
+//    @Secured("ROLE_ADMIN")
     @GetMapping("/all")
     public String getAll(Model model) {
         model.addAttribute("users", userService.getAll());
