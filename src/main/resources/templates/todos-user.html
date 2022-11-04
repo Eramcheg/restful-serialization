@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>All ToDo lists of User</title>
+</head>
+<body>
+<div th:replace="header"></div>
+<div class="col-md-offset-2 col-sm-8">
+    <h2 sec:authorize="hasRole('ROLE_ADMIN')" th:text="'All ToDo List'"/>
+    <h2 sec:authorize="hasRole('ROLE_USER')" th:text="${'All ToDos of ' +  user.firstName + ' ' + user.lastName}">.</h2>
+    <form th:action="@{|/todos/create/users/${user.id}|}" method="get">
+        <div align="right">
+            <input class="btn-info btn-lg" type="submit" value="Create New ToDo List">
+        </div>
+    </form>
+    <br>
+    <table class="table">
+        <tr>
+            <th>No.</th>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Created At</th>
+            <th>Owner</th>
+            <th colspan="2">Operations</th>
+        </tr>
+        <tr th:each="todo, iStat: ${todos}">
+            <td th:text="${iStat.index + 1}"/>
+            <td th:text="${todo.id}"/>
+            <td>
+                <a th:href="@{|/todos/${todo.id}/tasks|}" th:text="${todo.title}"/>
+            </td>
+            <td th:text="${#temporals.format(todo.createdAt, 'dd.MM.yyyy HH:mm')}"/>
+            <td th:text="${todo.getOwner().firstName + ' ' + todo.getOwner().lastName}"></td>
+
+            <div th:switch="${todo.owner.id == user.id || isAdmin}">
+
+                <div th:case="true">
+                    <td >
+                        <a th:href="@{|/todos/${todo.id}/update/users/${todo.owner.id}|}">Edit</a>
+                    </td>
+
+                    <td >
+                        <a th:href="@{|/todos/${todo.id}/delete/users/${todo.owner.id}|}">Remove</a>
+                    </td>
+                </div>
+
+                <div th:case="false">
+                    <td >
+
+                        <a th:href="@{|/todos/${todo.id}/update/users/${todo.owner.id}|}" onclick="return false"
+                           class="text-muted">Edit</a>
+
+                    </td>
+
+                    <td>
+
+                        <a th:href="@{|/todos/${todo.id}/delete/users/${todo.owner.id}|}" onclick="return false"
+                           class="text-muted">Remove</a>
+
+                    </td>
+                </div>
+
+            </div>
+
+        </tr>
+    </table>
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</div>
+
+</body>
+</html>

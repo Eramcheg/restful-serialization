@@ -1,0 +1,17 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <a th:href="@{/home}" class="btn btn-outline-primary">Home Page</a>
+                <a th:href="@{/users/user_todos}" class="btn btn-outline-primary">My To-Dos</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users/all}" class="btn btn-outline-primary">List of Users</a>
+            </div>
+        </div>
+    </nav>
+    <form sec:authorize="isAuthenticated()" class="text-right" style="margin-right: 50px">
+        <h5>Hello, <span sec:authentication="principal.firstName"></span>!
+            <a th:href="@{/logout}" class="btn btn-info btn-sm">LogOut</a>
+        </h5>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+</div>
