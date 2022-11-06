@@ -1,4 +1,4 @@
-/*
+
 package com.softserve.itacademy.controller;
 
 import com.softserve.itacademy.dto.TaskDto;
@@ -93,7 +93,7 @@ public class TaskController {
         return "redirect:/todos/" + todoId + "/tasks";
     }
 }
-*/
+/*
 package com.softserve.itacademy.controller;
 
 import com.softserve.itacademy.dto.TaskDto;
@@ -263,5 +263,6 @@ public class TaskController {
     public String delete(@PathVariable("task_id") long taskId, @PathVariable("todo_id") long todoId) {
         taskService.delete(taskId);
         return "redirect:/todos/" + todoId + "/tasks";
-    }*/
+    }*//*
 }
+*/
