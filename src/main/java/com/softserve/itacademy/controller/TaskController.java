@@ -104,6 +104,7 @@ import com.softserve.itacademy.service.StateService;
 import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -159,6 +160,7 @@ public class TaskController {
     }
 
     @PostMapping("/todo/{todo_id}")
+    @ResponseStatus(code=HttpStatus.CREATED)
     public Map<String,String> create(@PathVariable String todo_id, @RequestBody Map<String,String> task)
     {
         TaskDto taskDto=new TaskDto(Long.parseLong(task.get("task_id")),task.get("task"),task.get("priority"),Long.parseLong(task.get("todo_id")),Long.parseLong(task.get("state_id") ));
@@ -172,6 +174,7 @@ public class TaskController {
         map.put("priority",task1.getPriority().toString());
         map.put("state_id",String.valueOf(task1.getState().getId()));
         map.put("todo_id",String.valueOf(task1.getTodo().getId()));
+        //HttpStatus.CREATED;
         return map;
     }
 
