@@ -1,12 +1,14 @@
 package com.softserve.itacademy.controller;
 
+import com.softserve.itacademy.model.Role;
 import com.softserve.itacademy.model.User;
-import com.softserve.itacademy.service.RoleService;
 import com.softserve.itacademy.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.*;
 
 
@@ -21,11 +23,16 @@ public class RestUserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity create(@RequestParam User user) {
+    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity create(@RequestBody Map<String,String> user) {
         try {
-            userService.create(user);
-            return getResponseEntity(user, HttpStatus.CREATED);
+            User newUser = new User();
+            newUser.setId(Long.parseLong(user.get("id")));
+            newUser.setFirstName(user.get("firstName"));
+            newUser.setLastName(user.get("lastName"));
+            newUser.setEmail(user.get("email"));
+            newUser.setPassword(user.get("password"));
+            return getResponseEntity(userService.create(newUser), HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("User not create");
         }
