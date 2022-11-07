@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,9 @@ public class ToDoRestController {
     public ResponseEntity read(@PathVariable long id) {
 
         try {
+            if (todoService.readById(id) == null){
+                return ResponseEntity.notFound().build();
+            }
             List<Task> tasks = taskService.getByTodoId(id);
             Map<String, String> tasksList = new LinkedHashMap<>();
             for (Task task : tasks) {
@@ -91,13 +95,19 @@ public class ToDoRestController {
     @GetMapping("/all/users/{user_id}")
     public ResponseEntity getAll(@PathVariable("user_id") long userId) {
         List<ToDo> todos = todoService.getByUserId(userId);
-        Map<String, String> todosList = new LinkedHashMap<>();
+        List<Map<String, String>> todosList = new ArrayList<>();
+        Map<String, String> tempUser;
         try {
+            if (userService.readById(userId) == null){
+                return ResponseEntity.notFound().build();
+            }
             for (ToDo todo : todos) {
-                todosList.put("id", String.valueOf(todo.getId()));
-                todosList.put("title", todo.getTitle());
-                todosList.put("created_at", todo.getCreatedAt().toString());
-                todosList.put("owner_id", String.valueOf(todo.getOwner().getId()));
+                tempUser = new LinkedHashMap<>();
+                tempUser.put("id", String.valueOf(todo.getId()));
+                tempUser.put("title", todo.getTitle());
+                tempUser.put("created_at", todo.getCreatedAt().toString());
+                tempUser.put("owner_id", String.valueOf(todo.getOwner().getId()));
+                todosList.add(tempUser);
             }
             return new ResponseEntity(todosList, HttpStatus.OK);
         } catch (Exception e) {
