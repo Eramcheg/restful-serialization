@@ -67,8 +67,7 @@ public class ToDoRestController {
     }
 
     @PutMapping("/{todo_id}/update/users/{owner_id}")
-    public ResponseEntity update(@PathVariable("todo_id") long todoId, @PathVariable("owner_id") long ownerId,
-                                 Map<String, String> editedTodo) {
+    public ResponseEntity update(@PathVariable("todo_id") long todoId, @RequestBody Map<String, String> editedTodo) {
         try {
             ToDo todo = todoService.readById(todoId);
             todo.setTitle(editedTodo.get("title"));
@@ -107,7 +106,7 @@ public class ToDoRestController {
     }
 
     @PostMapping("/{id}/add")
-    public ResponseEntity addCollaborator(@PathVariable long id, Map<String, String> collaboratorInput) {
+    public ResponseEntity addCollaborator(@PathVariable long id, @RequestBody Map<String, String> collaboratorInput) {
         try {
             ToDo todo = todoService.readById(id);
             List<User> collaborators = todo.getCollaborators();
@@ -127,13 +126,19 @@ public class ToDoRestController {
         }
     }
 
-    @GetMapping("/{id}/remove")
-    public void removeCollaborator(@PathVariable long id, @RequestParam("user_id") long userId) {
-        ToDo todo = todoService.readById(id);
-        List<User> collaborators = todo.getCollaborators();
-        collaborators.remove(userService.readById(userId));
-        todo.setCollaborators(collaborators);
-        todoService.update(todo);
+    @DeleteMapping("/{id}/remove")
+    public ResponseEntity removeCollaborator(@PathVariable long id, @RequestBody Map<String, String> collaboratorInput) {
+        try {
+            ToDo todo = todoService.readById(id);
+            List<User> collaborators = todo.getCollaborators();
+            Long collaboratorId = Long.valueOf(collaboratorInput.get("collaborator_id"));
+            collaborators.remove(userService.readById(collaboratorId));
+            todo.setCollaborators(collaborators);
+            todoService.update(todo);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
     private ResponseEntity getTodOMap(ToDo enteredTodo, HttpStatus httpStatus) {
