@@ -6,11 +6,9 @@ import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
 import com.softserve.itacademy.service.UserService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/todos")
-public class ToDoRestController {
+public class ToDoRestController{
 
     private final ToDoService todoService;
     private final TaskService taskService;
@@ -42,7 +40,7 @@ public class ToDoRestController {
             todo.setCreatedAt(LocalDateTime.now());
             todo.setOwner(userService.readById(ownerId));
             todoService.create(todo);
-            return getTodOMap(todo, HttpStatus.CREATED);
+            return getTodoMap(todo, HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -76,7 +74,7 @@ public class ToDoRestController {
             ToDo todo = todoService.readById(todoId);
             todo.setTitle(editedTodo.get("title"));
             todoService.update(todo);
-            return getTodOMap(todo, HttpStatus.OK);
+            return getTodoMap(todo, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
@@ -94,13 +92,10 @@ public class ToDoRestController {
 
     @GetMapping("/all/users/{user_id}")
     public ResponseEntity getAll(@PathVariable("user_id") long userId) {
-        List<ToDo> todos = todoService.getByUserId(userId);
-        List<Map<String, String>> todosList = new ArrayList<>();
-        Map<String, String> tempUser;
         try {
-            if (userService.readById(userId) == null){
-                return ResponseEntity.notFound().build();
-            }
+            List<ToDo> todos = todoService.getByUserId(userId);
+            List<Map<String, String>> todosList = new ArrayList<>();
+            Map<String, String> tempUser;
             for (ToDo todo : todos) {
                 tempUser = new LinkedHashMap<>();
                 tempUser.put("id", String.valueOf(todo.getId()));
@@ -151,7 +146,7 @@ public class ToDoRestController {
         }
     }
 
-    private ResponseEntity getTodOMap(ToDo enteredTodo, HttpStatus httpStatus) {
+    private ResponseEntity getTodoMap(ToDo enteredTodo, HttpStatus httpStatus) {
         Map<String, String> editedMap = new LinkedHashMap<>();
         editedMap.put("id", String.valueOf(enteredTodo.getId()));
         editedMap.put("title", enteredTodo.getTitle());
