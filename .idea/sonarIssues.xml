@@ -8,6 +8,51 @@
             <set />
           </value>
         </entry>
+        <entry key="/a.dummy">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint16_ Spring_Security/jom_springsecurity_22-m10-s16-team-1-6/src/main/java/com/softserve/itacademy/config/SecurityConfig.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint16_ Spring_Security/jom_springsecurity_22-m10-s16-team-1-6/src/main/java/com/softserve/itacademy/controller/HomeController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint16_ Spring_Security/jom_springsecurity_22-m10-s16-team-1-6/src/main/java/com/softserve/itacademy/controller/ToDoController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint16_ Spring_Security/jom_springsecurity_22-m10-s16-team-1-6/src/main/java/com/softserve/itacademy/controller/UserController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint16_ Spring_Security/jom_springsecurity_22-m10-s16-team-1-6/src/main/java/com/softserve/itacademy/model/Role.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint16_ Spring_Security/jom_springsecurity_22-m10-s16-team-1-6/src/main/java/com/softserve/itacademy/security/Permissions.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint16_ Spring_Security/jom_springsecurity_22-m10-s16-team-1-6/src/main/java/com/softserve/itacademy/security/SecurityUser.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint16_ Spring_Security/jom_springsecurity_22-m10-s16-team-1-6/src/main/java/com/softserve/itacademy/security/UserDetailsServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/pom.xml">
           <value>
             <set />
@@ -33,7 +78,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/softserve/itacademy/controller/TestController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/com/softserve/itacademy/controller/ToDoController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/softserve/itacademy/controller/ToDoControllerOld.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/softserve/itacademy/controller/ToDoRestController.java">
           <value>
             <set />
           </value>
@@ -124,6 +184,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/resources/templates/users-list.html">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../../Sprint17_Rest API Serialization/Sprint18b/src/main/java/com/softserve/edu/controller/UserController.java">
           <value>
             <set />
           </value>
