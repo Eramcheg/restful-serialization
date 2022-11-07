@@ -90,9 +90,10 @@ public class ToDoRestController {
 
     @GetMapping("/all/users/{user_id}")
     public ResponseEntity getAll(@PathVariable("user_id") long userId) {
-        List<ToDo> todos = todoService.getByUserId(userId);
-        Map<String, String> todosList = new LinkedHashMap<>();
+
         try {
+            List<ToDo> todos = todoService.getByUserId(userId);
+            Map<String, String> todosList = new LinkedHashMap<>();
             for (ToDo todo : todos) {
                 todosList.put("id", String.valueOf(todo.getId()));
                 todosList.put("title", todo.getTitle());
