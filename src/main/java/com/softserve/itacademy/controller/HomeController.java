@@ -2,8 +2,10 @@ package com.softserve.itacademy.controller;
 
 import com.softserve.itacademy.model.User;
 //import com.softserve.itacademy.security.CustomUserDetails;
+import com.softserve.itacademy.security.jwt.JwtUser;
 import com.softserve.itacademy.service.UserService;
 //import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +23,15 @@ public class HomeController {
 
     @GetMapping({"/", "home"})
     public String home(Model model) {
-//        List<User> users;
-//        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (customUserDetails.getAuthorities().stream().anyMatch(u -> u.getAuthority().equals("ROLE_ADMIN"))) {
-//            users = userService.getAll();
-//        } else {
-//            users = Collections.singletonList(userService.readById(customUserDetails.getId()));
-//        }
-
+        List<User> users;
+        JwtUser customUserDetails = (JwtUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (customUserDetails.getAuthorities().stream().anyMatch(u -> u.getAuthority().equals("ROLE_ADMIN"))) {
+            users = userService.getAll();
+        } else {
+            users = Collections.singletonList(userService.readById(customUserDetails.getId()));
+        }
         model.addAttribute("users", userService.getAll());
         return "home";
     }
-
 
 }
