@@ -6,6 +6,7 @@ import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
 import com.softserve.itacademy.service.UserService;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -111,7 +112,7 @@ public class ToDoRestController{
     }
 
     @PostMapping("/{id}/add")
-    public ResponseEntity addCollaborator(@PathVariable long id, @RequestBody Map<String, String> collaboratorInput) {
+    public ResponseEntity addCollaborator(@PathVariable long id, @RequestBody Map<String, String> collaboratorInput, Authentication authentication) {
         try {
             ToDo todo = todoService.readById(id);
             List<User> collaborators = todo.getCollaborators();
@@ -119,9 +120,9 @@ public class ToDoRestController{
             if (collaborators.contains(userService.readById(collaboratorId))){
                 return new ResponseEntity(HttpStatus.CONFLICT);
             }
-//            else if (authentication.principal.id){
-//                return new ResponseEntity(HttpStatus.FORBIDDEN);
-//            }
+            else if (!authentication.name().equals(todo.getOwner().getEmail())){
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
+            }
             collaborators.add(userService.readById(collaboratorId));
             todo.setCollaborators(collaborators);
             todoService.update(todo);
