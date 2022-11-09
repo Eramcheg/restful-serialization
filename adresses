@@ -1,0 +1,44 @@
+http://localhost:9090/api/tasks/todo/7
+http://localhost:9090/api/tasks/7
+{
+
+            "task_id":1,
+            "task":"newTask",
+            "priority":"HIGH",
+            "state_id":"5",
+            "todo_id":7
+
+
+}
+
+http://localhost:9090/api/todos/all/users/4
+http://localhost:9090/api/todos/create/users/4
+{
+
+            "id":1,
+            "title":"newTask",
+            "created_at":"2022-09-16 15:00:04.810221",
+            "owner_id":"4"
+
+
+}
+http://localhost:9090/api/home
+http://localhost:9090/api/users
+{
+
+            "id":1,
+            "firstName":"Leonid",
+            "lastName":"Zeleni",
+            "email":"leo@mail.com",
+            "password":"22222"
+
+
+}
+http://localhost:9090/api/users/1/delete
+{
+
+            "username":"nick@mail.com",
+            "password":"2222"
+
+
+}
